@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Header from "@/src/components/header";
 import {
   View,
   Text,
@@ -7,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet,
-  ActivityIndicator,
   Alert,
 } from "react-native";
 import { sendOTP } from "@/src/services/api";
@@ -15,7 +13,6 @@ import { sendOTP } from "@/src/services/api";
 const LoginScreen: React.FC = () => {
   const [mobileNumber, setMobileNumber] = useState("");
   const [loading, setLoading] = useState(false);
-
   const handleGetOTP = async () => {
     if (mobileNumber.length !== 10) {
       Alert.alert("Invalid Number", "Please enter a valid 10-digit mobile number.");
@@ -33,63 +30,59 @@ const LoginScreen: React.FC = () => {
       setLoading(false);
     }
   };
-
   return (
-    <>
-      <Header />
-      <View style={styles.container}>
-        
-        <Image
-          source={{
-            uri: "https://www.sfaplay.com/championship/static/media/Login-banner.df9160e4.jpg",
-          }}
-          style={styles.banner}
-        />
-<View style={{paddingHorizontal:20}}>
-        <Text style={styles.title}>Participated before?</Text>
-        <Text style={styles.subtitle}>
-          Login to register for the SFA Championships 2024-25
-        </Text>
+    <View style={styles.container}>
+      {/* Header Image */}
+      <Image
+        source={{ uri: "https://www.sfaplay.com/championship/static/media/Login-banner.df9160e4.jpg" }} // Replace with actual URL
+        style={styles.banner}
+      />
 
-        <Text style={styles.label}>Enter your registered mobile number*</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="9900 0000 00"
-          keyboardType="phone-pad"
-          maxLength={10}
-          value={mobileNumber}
-          onChangeText={setMobileNumber}
-        />
+      {/* Login Section */}
+      <Text style={styles.title}>Participated before?</Text>
+      <Text style={styles.subtitle}>
+        Login to register for the SFA Championships 2024-25
+      </Text>
 
-        <TouchableOpacity
-          style={[styles.button, loading && { opacity: 0.7 }]}
-          onPress={handleGetOTP}
-          disabled={loading}
-        >
-          {loading ? <ActivityIndicator color="#FFF" /> : <Text style={styles.buttonText} onPress={handleGetOTP}>Get OTP</Text>}
-        </TouchableOpacity>
+      {/* Input Field */}
+      <Text style={styles.label}>Enter your registered mobile number*</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="9900 0000 00"
+        keyboardType="phone-pad"
+        maxLength={10}
+        value={mobileNumber}
+        onChangeText={setMobileNumber}
+      />
 
-        <Text style={styles.note}>
-          Note: To update your mobile number, email{" "}
-          <Text style={styles.email}>info@sfaplay.com</Text> with your name, school, SFA ID, old and new numbers.
-        </Text>
+      {/* Get OTP Button */}
+      <TouchableOpacity style={styles.button}>
+        <Text style={styles.buttonText} onPress={handleGetOTP}>Get OTP</Text>
+      </TouchableOpacity>
 
-        <View style={styles.dividerContainer}>
-          <View style={styles.divider} />
-          <Text style={styles.orText}>OR</Text>
-          <View style={styles.divider} />
-        </View>
-        </View>
+      {/* Note Section */}
+      <Text style={styles.note}>
+        Note: To update your mobile number, email{" "}
+        <Text style={styles.email}>info@sfaplay.com</Text> with your name,
+        school, SFA ID, old and new numbers.
+      </Text>
+
+      {/* OR Divider */}
+      <View style={styles.dividerContainer}>
+        <View style={styles.divider} />
+        <Text style={styles.orText}>OR</Text>
+        <View style={styles.divider} />
       </View>
-    </>
+    </View>
   );
 };
 
-// Styles remain unchanged
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    paddingHorizontal: 20,
     backgroundColor: "#F5F5F5",
   },
   banner: {
